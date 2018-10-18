@@ -6,26 +6,29 @@ const Conversation = React.createContext()
 const schoolFeesDictionary = [
 	{
 		key: 'computer science',
-		value: '32,000 Naira'
+		slug: 'cs',
+		value: '12,000 Naira'
 	},
 	{
 		key: 'accounting',
-		value: '40,000 Naira'
+		value: '20,000 Naira'
 	},
 	{
 		key: 'business administration',
+		slug: 'bam',
 		value: '30,000 Naira'
 	},
 	{
 		key: 'science lab tech',
 		slug: 'slt',
-		value: '50,000 Naira'
+		value: '20,000 Naira'
 	}
 ]
 
 const acceptanceFeesDictionary = [
 	{
 		key: 'computer science',
+		slug: 'cs',
 		value: '32,000 Naira'
 	},
 	{
@@ -34,6 +37,7 @@ const acceptanceFeesDictionary = [
 	},
 	{
 		key: 'business administration',
+		slug: 'bam',
 		value: '30,000 Naira'
 	},
 	{
@@ -55,7 +59,14 @@ export class ConversationProvider$ extends React.PureComponent {
 			const match = text.match('school fee')
 
 			if (match) {
-				return match.input.match(fee.key)
+				const key = match.input.match(fee.key)
+				const slug = fee.slug ? match.input.match(fee.slug) : null
+
+				if (key) {
+					return key
+				}
+
+				return slug
 			}
 		})[0]
 
@@ -73,7 +84,14 @@ export class ConversationProvider$ extends React.PureComponent {
 			const match = text.match('acceptance fee')
 
 			if (match) {
-				return match.input.match(fee.key)
+				const key = match.input.match(fee.key)
+				const slug = fee.slug ? match.input.match(fee.slug) : null
+
+				if (key) {
+					return key
+				}
+
+				return slug
 			}
 		})[0]
 
@@ -98,6 +116,9 @@ export class ConversationProvider$ extends React.PureComponent {
 			case 'hi':
 			case 'hello':
 				msg = "Hi there! My name is Mike, it's nice meeting you"
+				break
+			case 'fuck you':
+				msg = "Aww! That's harsh"
 				break
 			default:
 				if (this.checkSchoolFees(text)) {
