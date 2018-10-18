@@ -44,9 +44,10 @@ class RecognitionProvider$ extends React.PureComponent {
 
 			this.recognition.onend = e => {
 				console.log('ended')
+				this.setState({ listening: false })
+
 				if (!error && final_transcript) {
 					this.props.conversation.addUser(final_transcript)
-					this.setState({ listening: false })
 					final_transcript = ''
 					error = false
 				}
@@ -59,7 +60,9 @@ class RecognitionProvider$ extends React.PureComponent {
 			<Recognition.Provider
 				value={{ recognition: this.recognition, text: this.state.text }}
 			>
-				{this.state.listening && <LinearProgress variant="query" />}
+				{this.state.listening && (
+					<LinearProgress variant="query" color="secondary" />
+				)}
 				{this.props.children}
 			</Recognition.Provider>
 		)

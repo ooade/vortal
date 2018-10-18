@@ -29,7 +29,6 @@ class MyDocument extends Document {
 						href="https://fonts.googleapis.com/css?family=Source+Sans+Pro"
 						rel="stylesheet"
 					/>
-					<style>{`body{background:url(/static/img/bg.png)}*`}</style>
 					<link
 						rel="shortcut icon"
 						type="image/png"
@@ -85,6 +84,9 @@ MyDocument.getInitialProps = ctx => {
 						__html: pageContext.sheetsRegistry.toString()
 					}}
 				/>
+				<style>
+					{`html{overflow-y: hidden;}body{background:url(/static/img/bg.png)}`}
+				</style>
 				{flush() || null}
 			</React.Fragment>
 		)

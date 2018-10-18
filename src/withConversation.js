@@ -33,6 +33,8 @@ export class ConversationProvider$ extends React.PureComponent {
 	}
 
 	addUser = text => {
+		if (!text) return
+
 		this.setState(
 			{
 				user: [...this.state.user, text.replace(/<|>/g, '')],
