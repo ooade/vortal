@@ -3,11 +3,86 @@ import withSpeech from './withSpeech'
 
 const Conversation = React.createContext()
 
+const schoolFeesDictionary = [
+	{
+		key: 'computer science',
+		value: '32,000 Naira'
+	},
+	{
+		key: 'accounting',
+		value: '40,000 Naira'
+	},
+	{
+		key: 'business administration',
+		value: '30,000 Naira'
+	},
+	{
+		key: 'science lab tech',
+		slug: 'slt',
+		value: '50,000 Naira'
+	}
+]
+
+const acceptanceFeesDictionary = [
+	{
+		key: 'computer science',
+		value: '32,000 Naira'
+	},
+	{
+		key: 'accounting',
+		value: '40,000 Naira'
+	},
+	{
+		key: 'business administration',
+		value: '30,000 Naira'
+	},
+	{
+		key: 'science lab tech',
+		slug: 'slt',
+		value: '50,000 Naira'
+	}
+]
+
 export class ConversationProvider$ extends React.PureComponent {
 	state = {
 		machine: [],
 		user: [],
 		log: []
+	}
+
+	checkSchoolFees = text => {
+		const fee = schoolFeesDictionary.filter(fee => {
+			const match = text.match('school fee')
+
+			if (match) {
+				return match.input.match(fee.key)
+			}
+		})[0]
+
+		if (fee) {
+			return `${fee.key[0].toUpperCase() + fee.key.slice(1)} school fees is ${
+				fee.value
+			}`
+		}
+
+		return null
+	}
+
+	checkAcceptanceFees = text => {
+		const fee = acceptanceFeesDictionary.filter(fee => {
+			const match = text.match('acceptance fee')
+
+			if (match) {
+				return match.input.match(fee.key)
+			}
+		})[0]
+
+		if (fee) {
+			return `${fee.key[0].toUpperCase() +
+				fee.key.slice(1)} acceptance fee is ${fee.value}`
+		}
+
+		return null
 	}
 
 	analyzeText = text => {
@@ -25,11 +100,17 @@ export class ConversationProvider$ extends React.PureComponent {
 				msg = "Hi there! My name is Mike, it's nice meeting you"
 				break
 			default:
-				return
+				if (this.checkSchoolFees(text)) {
+					msg = this.checkSchoolFees(text)
+				} else if (this.checkAcceptanceFees(text)) {
+					msg = this.checkAcceptanceFees(text)
+				}
 		}
 
-		this.props.speech.speak(msg.replace(/\<br\/\>/g, ','))
-		this.addMachine(msg)
+		if (typeof msg !== 'undefined') {
+			this.props.speech.speak(msg.replace(/\<br\/\>/g, ','))
+			this.addMachine(msg)
+		}
 	}
 
 	addUser = text => {
