@@ -1,4 +1,6 @@
 import React from 'react'
+import { LinearProgress } from '@material-ui/core'
+
 import withConversation from './withConversation'
 
 const Recognition = React.createContext()
@@ -8,7 +10,8 @@ class RecognitionProvider$ extends React.PureComponent {
 		typeof window !== 'undefined' && new window.webkitSpeechRecognition()
 
 	state = {
-		text: ''
+		text: '',
+		listening: false
 	}
 
 	componentDidMount() {
@@ -21,8 +24,9 @@ class RecognitionProvider$ extends React.PureComponent {
 			let final_transcript = ''
 			let error = false
 
-			this.recognition.onstart = function() {
+			this.recognition.onstart = () => {
 				console.log('...')
+				this.setState({ listening: true })
 			}
 
 			this.recognition.onresult = event => {
@@ -33,7 +37,7 @@ class RecognitionProvider$ extends React.PureComponent {
 				}
 			}
 
-			this.recognition.onerror = function(event) {
+			this.recognition.onerror = event => {
 				console.log('err')
 				error = true
 			}
@@ -42,6 +46,7 @@ class RecognitionProvider$ extends React.PureComponent {
 				console.log('ended')
 				if (!error && final_transcript) {
 					this.props.conversation.addUser(final_transcript)
+					this.setState({ listening: false })
 					final_transcript = ''
 					error = false
 				}
@@ -54,6 +59,7 @@ class RecognitionProvider$ extends React.PureComponent {
 			<Recognition.Provider
 				value={{ recognition: this.recognition, text: this.state.text }}
 			>
+				{this.state.listening && <LinearProgress variant="query" />}
 				{this.props.children}
 			</Recognition.Provider>
 		)
