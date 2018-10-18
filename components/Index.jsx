@@ -3,7 +3,6 @@ import { AppBar, Button, Toolbar, Grid, Typography } from '@material-ui/core'
 import { Edit, Mic } from '@material-ui/icons'
 import { withStyles } from '@material-ui/core/styles'
 
-import Speak from '../src/synthesis'
 import withRecognition from '../src/withRecognition'
 import withConversation from '../src/withConversation'
 
@@ -39,8 +38,8 @@ const styles = theme => ({
 	userMessage: {
 		display: 'flex',
 		justifyContent: 'flex-end',
+		transition: 'flex 500ms ease-in-out',
 		'& div': {
-			height: 50,
 			borderRadius: 15,
 			backgroundColor: '#fff',
 			border: '1px solid #ddd',
@@ -50,7 +49,24 @@ const styles = theme => ({
 				'0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)',
 			outline: 0,
 			padding: '1rem',
-			transition: 'flex 500ms ease-in-out'
+			fontFamily: 'Source Sans Pro, Ubuntu'
+		}
+	},
+	machineMessage: {
+		display: 'flex',
+		justifyContent: 'flex-start',
+		transition: 'flex 500ms ease-in-out',
+		'& div': {
+			borderRadius: 15,
+			backgroundColor: '#fff',
+			border: '1px solid #ddd',
+			maxWidth: '60%',
+			marginTop: '1rem',
+			boxShadow:
+				'0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)',
+			outline: 0,
+			padding: '1rem',
+			fontFamily: 'Source Sans Pro, Ubuntu'
 		}
 	},
 	input: {
@@ -61,14 +77,14 @@ const styles = theme => ({
 		boxShadow:
 			'0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)',
 		outline: 0,
-		padding: '1rem',
-		transition: 'flex 500ms ease-in-out'
+		padding: '1rem'
 	}
 })
 
 class Index extends React.Component {
 	state = {
-		inputBox: false
+		inputBox: false,
+		text: ''
 	}
 
 	toggleInputBox = () => {
@@ -77,6 +93,16 @@ class Index extends React.Component {
 
 	handleMicClick = () => {
 		this.props.recognition.start()
+	}
+
+	handleTextChange = e => {
+		this.setState({ text: e.target.value })
+	}
+
+	handleFormSubmit = e => {
+		e.preventDefault()
+		this.props.conversation.addUser(this.state.text)
+		this.setState({ text: '' })
 	}
 
 	render() {
@@ -102,7 +128,7 @@ class Index extends React.Component {
 								}
 								key={key}
 							>
-								<div>{msg.text}</div>
+								<div dangerouslySetInnerHTML={{ __html: msg.text }} />
 							</div>
 						))}
 					</section>
@@ -116,11 +142,15 @@ class Index extends React.Component {
 							<Edit />
 						</Button>
 						{this.state.inputBox && (
-							<input
-								type="text"
-								className={classes.input}
-								placeholder="Type a message"
-							/>
+							<form onSubmit={this.handleFormSubmit}>
+								<input
+									type="text"
+									value={this.state.text}
+									onChange={this.handleTextChange}
+									className={classes.input}
+									placeholder="Type a message"
+								/>
+							</form>
 						)}
 						<Button
 							variant="extendedFab"

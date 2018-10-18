@@ -19,9 +19,10 @@ class RecognitionProvider$ extends React.PureComponent {
 			this.recognition.interimResults = false
 			this.recognition.lang = 'en-NG'
 			let final_transcript = ''
+			let error = false
 
 			this.recognition.onstart = function() {
-				console.log('recognition starting...')
+				console.log('...')
 			}
 
 			this.recognition.onresult = event => {
@@ -33,13 +34,17 @@ class RecognitionProvider$ extends React.PureComponent {
 			}
 
 			this.recognition.onerror = function(event) {
-				console.log('err', event)
+				console.log('err')
+				error = true
 			}
 
-			this.recognition.onend = () => {
+			this.recognition.onend = e => {
 				console.log('ended')
-				this.props.conversation.addUser(final_transcript)
-				final_transcript = ''
+				if (!error && final_transcript) {
+					this.props.conversation.addUser(final_transcript)
+					final_transcript = ''
+					error = false
+				}
 			}
 		}
 	}
