@@ -12,15 +12,20 @@ export class ConversationProvider extends React.PureComponent {
 	addUser = text => {
 		this.setState({
 			user: [...this.state.user, text],
-			log: [...this.state.log, text]
+			log: [...this.state.log, { text, role: 'user' }]
 		})
 	}
 
 	addMachine = text => {
 		this.setState({
 			machine: [...this.state.user, text],
-			log: [...this.state.log, text]
+			log: [...this.state.log, { text, role: 'machine' }]
 		})
+	}
+
+	componentDidUpdate() {
+		let chat = document.getElementById('chat')
+		chat.scrollTop = chat.scrollHeight
 	}
 
 	render() {

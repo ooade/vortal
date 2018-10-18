@@ -24,13 +24,33 @@ const styles = theme => ({
 		background: 'rgba(200,150,89,0.3)'
 	},
 	interactiveSection: {
-		flex: '1 1 0'
+		padding: '1rem',
+		flex: '1 1 0',
+		maxWidth: '100%',
+		overflowY: 'auto'
 	},
 	bottomActionBar: {
 		padding: '1rem',
 		transition: 'ease 5s',
 		'& button': {
 			margin: '0.4rem'
+		}
+	},
+	userMessage: {
+		display: 'flex',
+		justifyContent: 'flex-end',
+		'& div': {
+			height: 50,
+			borderRadius: 15,
+			backgroundColor: '#fff',
+			border: '1px solid #ddd',
+			maxWidth: '60%',
+			marginTop: '1rem',
+			boxShadow:
+				'0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12)',
+			outline: 0,
+			padding: '1rem',
+			transition: 'flex 500ms ease-in-out'
 		}
 	},
 	input: {
@@ -72,8 +92,19 @@ class Index extends React.Component {
 					</Toolbar>
 				</AppBar>
 				<Grid container direction="column" className={classes.body}>
-					<section className={classes.interactiveSection}>
-						{this.props.text}
+					<section className={classes.interactiveSection} id="chat">
+						{this.props.conversation.log.map((msg, key) => (
+							<div
+								className={
+									msg.role === 'user'
+										? classes.userMessage
+										: classes.machineMessage
+								}
+								key={key}
+							>
+								<div>{msg.text}</div>
+							</div>
+						))}
 					</section>
 					<Grid
 						container

@@ -1,5 +1,5 @@
 import React from 'react'
-import withConversation, { ConversationProvider } from './withConversation'
+import withConversation from './withConversation'
 
 const Recognition = React.createContext()
 
