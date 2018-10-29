@@ -112,6 +112,7 @@ class Index extends React.Component {
 			<div className={classes.root}>
 				<AppBar position="static">
 					<Toolbar className={classes.toolbar}>
+						{/* <img src={'../static/img/microphone.svg'} /> */}
 						<Typography variant="h6" color="inherit">
 							YCT Voice Portal
 						</Typography>

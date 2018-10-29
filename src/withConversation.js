@@ -104,13 +104,15 @@ export class ConversationProvider$ extends React.PureComponent {
 	}
 
 	analyzeText = text => {
+		const commands =
+			"Here are the list of valid commands: <br/> <br/> - Department's school fees <br/> - Latest news <br/> - Exam timetable"
+
 		text = text.toLowerCase()
 		let msg
 
 		switch (text) {
 			case 'help':
-				msg =
-					"Here are the list of valid commands: <br/> <br/> - Department's school fees <br/> - Latest news <br/> - Exam timetable"
+				msg = commands
 				break
 			case 'hey':
 			case 'hi':
@@ -121,11 +123,13 @@ export class ConversationProvider$ extends React.PureComponent {
 				msg = "Aww! That's harsh"
 				break
 			default:
-				if (this.checkSchoolFees(text)) {
-					msg = this.checkSchoolFees(text)
-				} else if (this.checkAcceptanceFees(text)) {
-					msg = this.checkAcceptanceFees(text)
-				}
+				msg = commands
+		}
+
+		if (this.checkSchoolFees(text)) {
+			msg = this.checkSchoolFees(text)
+		} else if (this.checkAcceptanceFees(text)) {
+			msg = this.checkAcceptanceFees(text)
 		}
 
 		if (typeof msg !== 'undefined') {
