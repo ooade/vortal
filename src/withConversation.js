@@ -47,6 +47,9 @@ const acceptanceFeesDictionary = [
 	}
 ]
 
+const commands =
+	"Here are the list of valid commands: <br/> <br/> - Department's school fee <br/> - Department's acceptance fee <br/> - Latest news"
+
 export class ConversationProvider$ extends React.PureComponent {
 	state = {
 		machine: [],
@@ -104,9 +107,6 @@ export class ConversationProvider$ extends React.PureComponent {
 	}
 
 	analyzeText = text => {
-		const commands =
-			"Here are the list of valid commands: <br/> <br/> - Department's school fees <br/> - Latest news <br/> - Exam timetable"
-
 		text = text.toLowerCase()
 		let msg
 

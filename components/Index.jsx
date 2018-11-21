@@ -10,6 +10,9 @@ const styles = theme => ({
 	root: {
 		height: '100vh'
 	},
+	image: {
+		width: 50
+	},
 	toolbar: {
 		color: theme.palette.primary.main,
 		height: 80,
@@ -105,6 +108,10 @@ class Index extends React.Component {
 		this.setState({ text: '' })
 	}
 
+	componentDidMount() {
+		console.log(this.props)
+	}
+
 	render() {
 		const { classes } = this.props
 
@@ -112,7 +119,10 @@ class Index extends React.Component {
 			<div className={classes.root}>
 				<AppBar position="static">
 					<Toolbar className={classes.toolbar}>
-						{/* <img src={'../static/img/microphone.svg'} /> */}
+						<img
+							className={classes.image}
+							src={'../static/img/microphone.svg'}
+						/>
 						<Typography variant="h6" color="inherit">
 							YCT Voice Portal
 						</Typography>
@@ -147,6 +157,7 @@ class Index extends React.Component {
 								<input
 									type="text"
 									value={this.state.text}
+									autoFocus={true}
 									onChange={this.handleTextChange}
 									className={classes.input}
 									placeholder="Type a message"
