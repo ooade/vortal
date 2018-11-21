@@ -6,12 +6,12 @@ export class SpeechProvider extends React.Component {
 	speak = async text => {
 		const msg = new SpeechSynthesisUtterance(text)
 		msg.voice = speechSynthesis.getVoices()[3]
-		speechSynthesis.speak(msg)
+		await speechSynthesis.speak(msg)
 	}
 
-	UNSAFE_componentWillMount() {
+	async UNSAFE_componentWillMount() {
 		if (typeof window !== 'undefined') {
-			speechSynthesis.getVoices()
+			await speechSynthesis.getVoices()
 		}
 	}
 

@@ -175,7 +175,10 @@ export class ConversationProvider$ extends React.PureComponent {
 					user: this.state.user,
 					addUser: this.addUser,
 					addMachine: this.addMachine,
-					machine: this.state.machine
+					machine: this.state.machine,
+					misc: {
+						commands
+					}
 				}}
 			>
 				{this.props.children}

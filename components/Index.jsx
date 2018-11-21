@@ -5,6 +5,7 @@ import { withStyles } from '@material-ui/core/styles'
 
 import withRecognition from '../src/withRecognition'
 import withConversation from '../src/withConversation'
+import withSpeech from '../src/withSpeech'
 
 const styles = theme => ({
 	root: {
@@ -109,7 +110,8 @@ class Index extends React.Component {
 	}
 
 	componentDidMount() {
-		console.log(this.props)
+		// setTimeout(() => this.props.speech.speak('Motherfucker'), 1000)
+		// this.props.misc.speak(this.props.misc.commands)
 	}
 
 	render() {
@@ -179,4 +181,6 @@ class Index extends React.Component {
 	}
 }
 
-export default withStyles(styles)(withConversation(withRecognition(Index)))
+export default withStyles(styles)(
+	withSpeech(withConversation(withRecognition(Index)))
+)
