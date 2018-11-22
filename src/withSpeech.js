@@ -5,7 +5,9 @@ const Speech = React.createContext()
 export class SpeechProvider extends React.Component {
 	speak = text => {
 		const msg = new SpeechSynthesisUtterance(text)
-		msg.voice = speechSynthesis.getVoices()[3]
+		msg.voice = speechSynthesis
+			.getVoices()
+			.find(x => x.name === 'Google UK English Male')
 		speechSynthesis.speak(msg)
 	}
 
