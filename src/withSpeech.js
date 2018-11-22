@@ -5,15 +5,20 @@ const Speech = React.createContext()
 export class SpeechProvider extends React.Component {
 	speak = text => {
 		const msg = new SpeechSynthesisUtterance(text)
-		msg.voice = speechSynthesis
-			.getVoices()
-			.find(x => x.name === 'Google UK English Male')
-		speechSynthesis.speak(msg)
+		msg.lang = 'en-GB'
+
+		if (speechSynthesis.getVoices().length > 0) {
+			msg.voice = speechSynthesis
+				.getVoices()
+				.find(x => x.name === 'Google UK English Male')
+
+			speechSynthesis.speak(msg)
+		}
 	}
 
-	UNSAFE_componentWillMount() {
+	async UNSAFE_componentWillMount() {
 		if (typeof window !== 'undefined') {
-			speechSynthesis.getVoices()
+			await speechSynthesis.getVoices()
 		}
 	}
 

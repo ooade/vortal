@@ -183,16 +183,18 @@ export class ConversationProvider$ extends React.PureComponent {
 		})
 	}
 
-	handleIndexMounted = async () => {
-		const welcomeMsg = "Hi, My name is Mike! \n I'm your voice assistant"
-		const instructionMsg =
-			"To get started, Click on the button below that says 'Click to speak'"
+	handleIndexMounted = () => {
+		setTimeout(async () => {
+			const welcomeMsg = "Hi, My name is Mike! \n I'm your voice assistant"
+			const instructionMsg =
+				"To get started, Click on the button below that says 'Click to speak'"
 
-		this.props.speech.speak(welcomeMsg)
-		await this.addMachine(welcomeMsg)
+			this.props.speech.speak(welcomeMsg)
+			await this.addMachine(welcomeMsg)
 
-		this.props.speech.speak(instructionMsg)
-		await this.addMachine(instructionMsg)
+			this.props.speech.speak(instructionMsg)
+			await this.addMachine(instructionMsg)
+		}, 500)
 	}
 
 	componentDidUpdate() {
