@@ -128,7 +128,9 @@ export class ConversationProvider$ extends React.PureComponent {
 
 		if (this.checkSchoolFees(text)) {
 			msg = this.checkSchoolFees(text)
-		} else if (this.checkAcceptanceFees(text)) {
+		}
+
+		if (this.checkAcceptanceFees(text)) {
 			msg = this.checkAcceptanceFees(text)
 		}
 
