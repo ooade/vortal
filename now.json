@@ -1,0 +1,7 @@
+{
+	"env": {
+		"NODE_ENV": "production"
+	},
+	"alias": "yct-vortal.now.sh",
+	"version": 2
+}
