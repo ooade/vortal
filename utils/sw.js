@@ -1,4 +1,4 @@
-workbox.core.setCacheNameDetails({ prefix: 'next-ss' })
+workbox.core.setCacheNameDetails({ prefix: 'vortal' })
 
 workbox.skipWaiting()
 workbox.clientsClaim()

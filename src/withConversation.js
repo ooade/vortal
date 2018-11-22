@@ -106,6 +106,16 @@ export class ConversationProvider$ extends React.PureComponent {
 		return null
 	}
 
+	checkLatestNews = text => {
+		const match = text.match('latest news')
+
+		if (match) {
+			// Latest news here
+		}
+
+		return null
+	}
+
 	analyzeText = text => {
 		text = text.toLowerCase()
 		let msg
@@ -137,6 +147,10 @@ export class ConversationProvider$ extends React.PureComponent {
 
 		if (this.checkAcceptanceFees(text)) {
 			msg = this.checkAcceptanceFees(text)
+		}
+
+		if (this.checkLatestNews(text)) {
+			msg = this.checkLatestNews(text)
 		}
 
 		if (typeof msg !== 'undefined') {
