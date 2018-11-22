@@ -2,6 +2,7 @@ import React from 'react'
 import { LinearProgress } from '@material-ui/core'
 
 import withConversation from './withConversation'
+import withSpeech from './withSpeech'
 
 const Recognition = React.createContext()
 
@@ -26,6 +27,7 @@ class RecognitionProvider$ extends React.PureComponent {
 
 			this.recognition.onstart = () => {
 				console.log('...')
+				this.props.speech.isRecognitionOn()
 				this.setState({ listening: true })
 			}
 
@@ -69,7 +71,9 @@ class RecognitionProvider$ extends React.PureComponent {
 	}
 }
 
-export const RecognitionProvider = withConversation(RecognitionProvider$)
+export const RecognitionProvider = withSpeech(
+	withConversation(RecognitionProvider$)
+)
 
 export default ComposedComponent => props => (
 	<Recognition.Consumer>

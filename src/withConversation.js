@@ -119,7 +119,12 @@ export class ConversationProvider$ extends React.PureComponent {
 			case 'hello':
 				msg = "Hi there! My name is Mike, it's nice meeting you"
 				break
+			case 'hey mike':
+				msg = 'Hi there!'
+				break
 			case 'fuck you':
+			case 'keep quiet':
+			case 'keep shut':
 				msg = "Aww! That's harsh"
 				break
 			default:
@@ -164,6 +169,18 @@ export class ConversationProvider$ extends React.PureComponent {
 		})
 	}
 
+	handleIndexMounted = async () => {
+		const welcomeMsg = "Hi, My name is Mike! \n I'm your voice assistant"
+		const instructionMsg =
+			"To get started, Click on the button below that says 'Click to speak'"
+
+		this.props.speech.speak(welcomeMsg)
+		await this.addMachine(welcomeMsg)
+
+		this.props.speech.speak(instructionMsg)
+		await this.addMachine(instructionMsg)
+	}
+
 	componentDidUpdate() {
 		let chat = document.getElementById('chat')
 		chat.scrollTop = chat.scrollHeight
@@ -178,9 +195,7 @@ export class ConversationProvider$ extends React.PureComponent {
 					addUser: this.addUser,
 					addMachine: this.addMachine,
 					machine: this.state.machine,
-					misc: {
-						commands
-					}
+					onIndexMounted: this.handleIndexMounted
 				}}
 			>
 				{this.props.children}

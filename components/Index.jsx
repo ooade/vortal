@@ -18,6 +18,7 @@ const styles = theme => ({
 		color: theme.palette.primary.main,
 		height: 80,
 		backgroundColor: '#fff',
+		borderBottom: `1px solid ${theme.palette.primary.main}`,
 		'& h6': {
 			fontWeight: 'bold'
 		}
@@ -110,8 +111,7 @@ class Index extends React.Component {
 	}
 
 	componentDidMount() {
-		// setTimeout(() => this.props.speech.speak('Motherfucker'), 1000)
-		// this.props.misc.speak(this.props.misc.commands)
+		this.props.conversation.onIndexMounted()
 	}
 
 	render() {

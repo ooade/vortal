@@ -3,15 +3,15 @@ import React from 'react'
 const Speech = React.createContext()
 
 export class SpeechProvider extends React.Component {
-	speak = async text => {
+	speak = text => {
 		const msg = new SpeechSynthesisUtterance(text)
 		msg.voice = speechSynthesis.getVoices()[3]
-		await speechSynthesis.speak(msg)
+		speechSynthesis.speak(msg)
 	}
 
-	async UNSAFE_componentWillMount() {
+	UNSAFE_componentWillMount() {
 		if (typeof window !== 'undefined') {
-			await speechSynthesis.getVoices()
+			speechSynthesis.getVoices()
 		}
 	}
 
@@ -21,9 +21,15 @@ export class SpeechProvider extends React.Component {
 		}
 	}
 
+	isRecognitionOn = () => {
+		speechSynthesis.cancel()
+	}
+
 	render() {
 		return (
-			<Speech.Provider value={{ speak: this.speak }}>
+			<Speech.Provider
+				value={{ speak: this.speak, isRecognitionOn: this.isRecognitionOn }}
+			>
 				{this.props.children}
 			</Speech.Provider>
 		)
