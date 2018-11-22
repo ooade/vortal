@@ -2,6 +2,13 @@
 	"env": {
 		"NODE_ENV": "production"
 	},
+	"builds": [
+		{
+			"src": "*.js",
+			"use": "@now/node"
+		}
+	],
+	"public": true,
 	"alias": "yct-vortal.now.sh",
 	"version": 2
 }
