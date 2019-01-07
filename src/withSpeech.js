@@ -10,7 +10,13 @@ export class SpeechProvider extends React.Component {
 		if (speechSynthesis.getVoices().length > 0) {
 			msg.voice = speechSynthesis
 				.getVoices()
-				.find(x => x.name === 'Google UK English Male')
+				.map(v => {
+					console.log(v)
+					return v
+				})
+				.find(
+					x => x.name === 'Google UK English Male' || 'English United Kingdom'
+				)
 
 			speechSynthesis.speak(msg)
 		}

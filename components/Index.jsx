@@ -37,7 +37,8 @@ const styles = theme => ({
 		padding: '1rem',
 		transition: 'ease 5s',
 		'& button': {
-			margin: '0.4rem'
+			margin: '0.4rem',
+			marginBottom: '3rem'
 		}
 	},
 	userMessage: {
