@@ -5,21 +5,9 @@ const Speech = React.createContext()
 export class SpeechProvider extends React.Component {
 	speak = text => {
 		const msg = new SpeechSynthesisUtterance(text)
-		msg.lang = 'en-GB'
+		msg.lang = 'bn_DB'
 
-		if (speechSynthesis.getVoices().length > 0) {
-			msg.voice = speechSynthesis
-				.getVoices()
-				.map(v => {
-					console.log(v)
-					return v
-				})
-				.find(
-					x => x.name === 'Google UK English Male' || 'English United Kingdom'
-				)
-
-			speechSynthesis.speak(msg)
-		}
+		speechSynthesis.speak(msg)
 	}
 
 	async UNSAFE_componentWillMount() {
