@@ -1,6 +1,13 @@
 import React from 'react'
 import withSpeech from './withSpeech'
 
+// @NOTE: The data analysis in this section is kinda hard coded and does not
+// perform any machine learning quirks
+// To do something better, extract your keys to the server and make a request
+// based on user's request and do a proper machine learning analysis
+
+// Right now, I don't know ML :(
+
 const Conversation = React.createContext()
 
 const schoolFeesDictionary = [
