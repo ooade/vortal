@@ -5,11 +5,12 @@ const Speech = React.createContext()
 export class SpeechProvider extends React.Component {
 	speak = text => {
 		const msg = new SpeechSynthesisUtterance(text)
-		msg.lang = 'bn_DB'
-		msg.pitch = 1.4
-		msg.rate = 1
-		msg.volume = 2
-		console.log(msg)
+		msg.lang = 'en_GB'
+		msg.voice = speechSynthesis
+			.getVoices()
+			.find(voice => voice.name === 'English United Kingdom')
+		msg.pitch = 1
+
 		speechSynthesis.speak(msg)
 	}
 

@@ -127,9 +127,9 @@ export class ConversationProvider$ extends React.PureComponent {
 			case 'hey':
 			case 'hi':
 			case 'hello':
-				msg = "Hi there! My name is Mike, it's nice meeting you"
+				msg = "Hi there! I'm Ruby, it's nice meeting you"
 				break
-			case 'hey mike':
+			case 'hey ruby':
 				msg = 'Hi there!'
 				break
 			case 'fuck you':
@@ -185,7 +185,7 @@ export class ConversationProvider$ extends React.PureComponent {
 
 	handleIndexMounted = () => {
 		setTimeout(async () => {
-			const welcomeMsg = "Hi, My name is Mike! \n I'm your voice assistant"
+			const welcomeMsg = "Hi, I'm Ruby! \n I'm your voice assistant"
 			const instructionMsg =
 				"To get started, Click on the button below that says 'Click to speak'"
 
