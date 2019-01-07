@@ -6,7 +6,10 @@ export class SpeechProvider extends React.Component {
 	speak = text => {
 		const msg = new SpeechSynthesisUtterance(text)
 		msg.lang = 'bn_DB'
-
+		msg.pitch = 1.4
+		msg.rate = 1
+		msg.volume = 2
+		console.log(msg)
 		speechSynthesis.speak(msg)
 	}
 

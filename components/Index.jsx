@@ -36,9 +36,9 @@ const styles = theme => ({
 	bottomActionBar: {
 		padding: '1rem',
 		transition: 'ease 5s',
+		marginBottom: '3rem',
 		'& button': {
-			margin: '0.4rem',
-			marginBottom: '3rem'
+			margin: '0.4rem'
 		}
 	},
 	userMessage: {
