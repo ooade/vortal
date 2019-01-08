@@ -1,6 +1,10 @@
 import React from 'react'
 import withSpeech from './withSpeech'
 
+// @DATA
+import news from '../data/news.json'
+import dictionary from '../data/dictionary.json'
+
 // @NOTE: The data analysis in this section is kinda hard coded and does not
 // perform any machine learning quirks
 // To do something better, extract your keys to the server and make a request
@@ -8,51 +12,12 @@ import withSpeech from './withSpeech'
 
 // Right now, I don't know ML :(
 
+// A new key is generated per page load and checked in case of attack
+const SAFE_KEY = Math.random()
+	.toString(26)
+	.slice(3, -1)
+
 const Conversation = React.createContext()
-
-const schoolFeesDictionary = [
-	{
-		key: 'computer science',
-		slug: 'cs',
-		value: '12,000 Naira'
-	},
-	{
-		key: 'accounting',
-		value: '20,000 Naira'
-	},
-	{
-		key: 'business administration',
-		slug: 'bam',
-		value: '30,000 Naira'
-	},
-	{
-		key: 'science lab tech',
-		slug: 'slt',
-		value: '20,000 Naira'
-	}
-]
-
-const acceptanceFeesDictionary = [
-	{
-		key: 'computer science',
-		slug: 'cs',
-		value: '32,000 Naira'
-	},
-	{
-		key: 'accounting',
-		value: '40,000 Naira'
-	},
-	{
-		key: 'business administration',
-		slug: 'bam',
-		value: '30,000 Naira'
-	},
-	{
-		key: 'science lab tech',
-		slug: 'slt',
-		value: '50,000 Naira'
-	}
-]
 
 const commands =
 	"Here are the list of valid commands: <br/> <br/> - Department's school fee <br/> - Department's acceptance fee <br/> - Latest news"
@@ -65,7 +30,7 @@ export class ConversationProvider$ extends React.PureComponent {
 	}
 
 	checkSchoolFees = text => {
-		const fee = schoolFeesDictionary.filter(fee => {
+		const fee = dictionary.schoolFees.filter(fee => {
 			const match = text.match('school fee')
 
 			if (match) {
@@ -90,7 +55,7 @@ export class ConversationProvider$ extends React.PureComponent {
 	}
 
 	checkAcceptanceFees = text => {
-		const fee = acceptanceFeesDictionary.filter(fee => {
+		const fee = dictionary.acceptanceFees.filter(fee => {
 			const match = text.match('acceptance fee')
 
 			if (match) {
@@ -118,6 +83,10 @@ export class ConversationProvider$ extends React.PureComponent {
 
 		if (match) {
 			// Latest news here
+			return {
+				$$key: SAFE_KEY,
+				news
+			}
 		}
 
 		return null
@@ -161,8 +130,12 @@ export class ConversationProvider$ extends React.PureComponent {
 		}
 
 		if (typeof msg !== 'undefined') {
-			this.props.speech.speak(msg.replace(/\<br\/\>/g, ','))
-			this.addMachine(msg)
+			if (typeof msg === 'object' && msg.$$key === SAFE_KEY) {
+				this.addMachine(msg)
+			} else {
+				this.props.speech.speak(msg.replace(/\<br\/\>/g, ','))
+				this.addMachine(msg)
+			}
 		}
 	}
 
