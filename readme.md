@@ -11,6 +11,7 @@ Voice Portal System using modern web technologies.
 
 - Next.js
 - Material UI
+- Web Speech API
 
 ### Screenshot
 
