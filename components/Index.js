@@ -1,11 +1,24 @@
 import React from 'react'
-import { AppBar, Button, Toolbar, Grid, Typography } from '@material-ui/core'
+import {
+	AppBar,
+	Button,
+	Toolbar,
+	Grid,
+	Snackbar,
+	Typography
+} from '@material-ui/core'
 import { Edit, Mic } from '@material-ui/icons'
 import { withStyles } from '@material-ui/core/styles'
 
 import withRecognition from '../src/withRecognition'
 import withConversation from '../src/withConversation'
 import withSpeech from '../src/withSpeech'
+
+const capitalize = v =>
+	v
+		.split('')[0]
+		.toUpperCase()
+		.concat(v.slice(1))
 
 const styles = theme => ({
 	root: {
@@ -90,7 +103,8 @@ const styles = theme => ({
 class Index extends React.Component {
 	state = {
 		inputBox: false,
-		text: ''
+		text: '',
+		error: ''
 	}
 
 	toggleInputBox = () => {
@@ -98,7 +112,16 @@ class Index extends React.Component {
 	}
 
 	handleMicClick = () => {
-		this.props.recognition.start()
+		try {
+			this.props.recognition.start()
+		} catch (e) {
+			//"Failed to execute 'start' on 'SpeechRecognition': recognition has already started."
+			this.setState({
+				error: capitalize(
+					e.message.split(':')[1].slice(1, -1) // trim the whitespace before recognition and remove the full stop
+				)
+			})
+		}
 	}
 
 	handleTextChange = e => {
@@ -111,15 +134,34 @@ class Index extends React.Component {
 		this.setState({ text: '' })
 	}
 
+	handleClose = e => {
+		this.setState({ error: '' })
+	}
+
 	componentDidMount() {
 		this.props.conversation.onIndexMounted()
 	}
 
 	render() {
 		const { classes } = this.props
+		const { error } = this.state
 
 		return (
 			<div className={classes.root}>
+				<Snackbar
+					anchorOrigin={{
+						vertical: 'bottom',
+						horizontal: 'center'
+					}}
+					open={error.length > 0}
+					autoHideDuration={6000}
+					onClose={this.handleClose}
+					ContentProps={{
+						'aria-describedby': 'message-id'
+					}}
+					message={<span id="message-id">{error}</span>}
+				/>
+
 				<AppBar position="static">
 					<Toolbar className={classes.toolbar}>
 						<img
@@ -131,6 +173,7 @@ class Index extends React.Component {
 						</Typography>
 					</Toolbar>
 				</AppBar>
+
 				<Grid container direction="column" className={classes.body}>
 					<section className={classes.interactiveSection} id="chat">
 						{this.props.conversation.log.map((msg, key) => (
