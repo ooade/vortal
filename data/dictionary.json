@@ -22,23 +22,9 @@
 	],
 	"acceptanceFees": [
 		{
-			"key": "computer science",
-			"slug": "cs",
-			"value": "32,000 Naira"
-		},
-		{
-			"key": "accounting",
-			"value": "40,000 Naira"
-		},
-		{
-			"key": "business administration",
-			"slug": "bam",
-			"value": "30,000 Naira"
-		},
-		{
-			"key": "science lab tech",
-			"slug": "slt",
-			"value": "32,000 Naira"
+			"key": " ",
+			"slug": " ",
+			"value": "25,000 Naira"
 		}
 	]
 }

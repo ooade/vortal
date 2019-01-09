@@ -131,6 +131,11 @@ export class ConversationProvider$ extends React.PureComponent {
 
 		if (typeof msg !== 'undefined') {
 			if (typeof msg === 'object' && msg.$$key === SAFE_KEY) {
+				// Read news
+				msg.news.map(({ title, content }) => {
+					this.props.speech.speak(title)
+					this.props.speech.speak(content)
+				})
 				this.addMachine(msg)
 			} else {
 				this.props.speech.speak(msg.replace(/\<br\/\>/g, ','))
