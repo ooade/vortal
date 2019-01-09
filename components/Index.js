@@ -76,9 +76,9 @@ const styles = theme => ({
 		}
 	},
 	newsContent: {
-		maxWidth: '60%',
+		maxWidth: '70%',
 		marginTop: '1rem',
-		'& div': {
+		'& > div': {
 			fontFamily: 'Source Sans Pro, Ubuntu',
 			marginTop: '1rem'
 		}
