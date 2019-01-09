@@ -204,7 +204,6 @@ class Index extends React.Component {
 					}}
 					message={<span id="message-id">{error}</span>}
 				/>
-
 				<AppBar position="static">
 					<Toolbar className={classes.toolbar}>
 						<img
@@ -216,7 +215,6 @@ class Index extends React.Component {
 						</Typography>
 					</Toolbar>
 				</AppBar>
-
 				<Grid container direction="column" className={classes.body}>
 					<section className={classes.interactiveSection} id="chat">
 						{this.props.conversation.log.map((msg, key) => (
