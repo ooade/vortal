@@ -2,6 +2,10 @@ import React from 'react'
 import {
 	AppBar,
 	Button,
+	Card,
+	CardActionArea,
+	CardMedia,
+	CardContent,
 	Toolbar,
 	Grid,
 	Snackbar,
@@ -71,6 +75,14 @@ const styles = theme => ({
 			fontFamily: 'Source Sans Pro, Ubuntu'
 		}
 	},
+	newsContent: {
+		maxWidth: '60%',
+		marginTop: '1rem',
+		'& div': {
+			fontFamily: 'Source Sans Pro, Ubuntu',
+			marginTop: '1rem'
+		}
+	},
 	machineMessage: {
 		display: 'flex',
 		justifyContent: 'flex-start',
@@ -87,6 +99,9 @@ const styles = theme => ({
 			padding: '1rem',
 			fontFamily: 'Source Sans Pro, Ubuntu'
 		}
+	},
+	media: {
+		height: 140
 	},
 	input: {
 		height: 50,
@@ -146,6 +161,34 @@ class Index extends React.Component {
 		const { classes } = this.props
 		const { error } = this.state
 
+		const newsContent = ({ content, bannerURL, title, id }) => (
+			<Card key={id}>
+				<CardActionArea>
+					<CardMedia
+						image={bannerURL}
+						title={title}
+						className={classes.media}
+					/>
+					<CardContent>
+						<Typography variant="h6">{title}</Typography>
+						<Typography component="p">{content}</Typography>
+					</CardContent>
+				</CardActionArea>
+			</Card>
+		)
+
+		const selectClassName = msg => {
+			if (typeof msg.text.news !== 'undefined') {
+				return classes.newsContent
+			}
+
+			if (msg.role === 'user') {
+				return classes.userMessage
+			}
+
+			return classes.machineMessage
+		}
+
 		return (
 			<div className={classes.root}>
 				<Snackbar
@@ -177,15 +220,12 @@ class Index extends React.Component {
 				<Grid container direction="column" className={classes.body}>
 					<section className={classes.interactiveSection} id="chat">
 						{this.props.conversation.log.map((msg, key) => (
-							<div
-								className={
-									msg.role === 'user'
-										? classes.userMessage
-										: classes.machineMessage
-								}
-								key={key}
-							>
-								<div dangerouslySetInnerHTML={{ __html: msg.text }} />
+							<div className={selectClassName(msg)} key={key}>
+								{msg.text.news ? (
+									msg.text.news.map(newsContent)
+								) : (
+									<div dangerouslySetInnerHTML={{ __html: msg.text }} />
+								)}
 							</div>
 						))}
 					</section>
